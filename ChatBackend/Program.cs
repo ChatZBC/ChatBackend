@@ -1,4 +1,6 @@
 
+using ChatBackend.Hubs;
+
 namespace ChatBackend
 {
     public class Program
@@ -14,6 +16,10 @@ namespace ChatBackend
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            // Add SignalR service
+            //builder.Services.AddSignalR();
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -26,7 +32,9 @@ namespace ChatBackend
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseCors(settings => settings.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            // Map SignalR Hub to /chatHub
+            //app.MapHub<ChatHub>("/chatHub");
 
             app.MapControllers();
 
