@@ -30,23 +30,14 @@ namespace ChatBackend
 
             app.UseHttpsRedirection();
 
-            app.MapHub<ChatHub>("/chatHub");
             app.UseAuthorization();
-<<<<<<< Updated upstream
-            
-            // SignalR middleware
-=======
             app.UseRouting();
->>>>>>> Stashed changes
             app.UseCors(settings => settings.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             //app.UseEndpoints(endpoints => endpoints.MapHub<ChatHub>);
             //app.UseCors(settings => settings.AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             // Map SignalR Hub to /chatHub
-<<<<<<< Updated upstream
             app.MapHub<ChatHub>("/chatHub");
-=======
->>>>>>> Stashed changes
 
             app.MapControllers();
 

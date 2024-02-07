@@ -23,6 +23,7 @@ namespace ChatBackend.Hubs
         public override Task OnConnectedAsync()
         {
             Console.WriteLine("connected");
+            SendMessage("suck", "fuck");
             return base.OnConnectedAsync();
         }
 
@@ -39,7 +40,7 @@ namespace ChatBackend.Hubs
             
             if (_messageChecker.CheckMessage(message) == true) 
             {
-                await Clients.All.SendAsync("ReceiveMessage", user, message);
+                await Clients.All.SendAsync("MessageReceived", user, message);
             }
         }
     }
