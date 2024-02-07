@@ -23,7 +23,7 @@ namespace ChatBackend.Hubs
         public override Task OnConnectedAsync()
         {
             Console.WriteLine("connected");
-            SendMessage("suck", "fuck");
+            SendMessage("ChatZBC", "Welcome to the ChatHub!");
             return base.OnConnectedAsync();
         }
 
