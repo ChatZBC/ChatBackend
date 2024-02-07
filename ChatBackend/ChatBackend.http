@@ -1,4 +1,5 @@
-@ChatBackend_HostAddress = http://localhost:5204
+@ChatBackend_HostAddress = http://localhost:9000
+# Serveren bliver opsat til at tillade trafik på port 9000, så det er den port, der skal bruges til at tilgå serveren.
 
 GET {{ChatBackend_HostAddress}}/weatherforecast/
 Accept: application/json

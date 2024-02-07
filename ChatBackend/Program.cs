@@ -17,7 +17,7 @@ namespace ChatBackend
             builder.Services.AddSwaggerGen();
 
             // Add SignalR service
-            //builder.Services.AddSignalR();
+            builder.Services.AddSignalR();
 
 
             var app = builder.Build();
@@ -32,9 +32,11 @@ namespace ChatBackend
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+            
+            // SignalR middleware
             app.UseCors(settings => settings.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
             // Map SignalR Hub to /chatHub
-            //app.MapHub<ChatHub>("/chatHub");
+            app.MapHub<ChatHub>("/chatHub");
 
             app.MapControllers();
 
