@@ -4,7 +4,11 @@
     {
         public bool Validate(string input)
         {
-            throw new NotImplementedException();
+            if (input.Contains('>') || input.Contains('<'))
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
