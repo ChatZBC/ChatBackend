@@ -13,18 +13,33 @@ namespace ChatBackend.Hubs
 
         // Instantiate our rule engine
         private MessageChecker _messageChecker = new MessageChecker();
+        private ConnectedUserTransient _users;
 
         // Inject the ILogger service into the ChatHub
-        public ChatHub(ILogger<ChatHub> logger)
+        public ChatHub(ILogger<ChatHub> logger, ConnectedUserTransient connectedUserTransient)
         {
             _logger = logger;
+            this._users = connectedUserTransient;
         }
+
 
         public override Task OnConnectedAsync()
         {
-            Console.WriteLine("connected");
-            SendMessage("ChatZBC", "Welcome to the ChatHub!");
+            var username = Context.GetHttpContext().Request.Query["username"].ToString();
+            Console.WriteLine("connected"+username);
+            if(username != string.Empty)
+            {
+                _users.Users.TryAdd(Context.ConnectionId, username);
+            }
+            SendMessage(username, "welcome").ConfigureAwait(false);
+            UpdateUserList(username).ConfigureAwait(false);
             return base.OnConnectedAsync();
+        }
+
+        public override Task OnDisconnectedAsync(Exception? exception)
+        {
+            _users.Users.Remove(Context.ConnectionId);
+            return base.OnDisconnectedAsync(exception);
         }
 
         public void LogMessage(string user, string message)
@@ -42,6 +57,37 @@ namespace ChatBackend.Hubs
             {
                 await Clients.All.SendAsync("MessageReceived", user, message);
             }
+        }
+
+        /// <summary>
+        /// Sends the new user to all connected users
+        /// </summary>
+        /// <param name="newUser"></param>
+        /// <returns></returns>
+        public async Task UpdateUserList(string newUser)
+        {
+            await Clients.All.SendAsync("adduser",newUser);
+        }
+
+        /// <summary>
+        /// sends userlist only to the newly connected user
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public async Task RequestUserList(string username)
+        {
+            LogMessage(username, "Requested userlist");
+            await Clients.Caller.SendAsync("userlist", _users.Users);
+        }
+
+        /// <summary>
+        /// sends error to client
+        /// </summary>
+        /// <param name="error"></param>
+        /// <returns></returns>
+        public async Task SendError(string error)
+        {
+            await Clients.Caller.SendAsync("error", error);
         }
     }
 }
