@@ -12,6 +12,12 @@ namespace ChatBackend.Tests
             Assert.Throws<InvalidOperationException>(() => comp.Validate(""));
         }
 
-
+        [Fact]
+        public void Validate_AllValidatorsPass()
+        {
+            InputValidationComposite comp = new InputValidationComposite();
+            comp.AddInputValidator(new XSSValidator());
+            Assert.True(comp.Validate("This is a normal message"));
+        }
     }
 }
