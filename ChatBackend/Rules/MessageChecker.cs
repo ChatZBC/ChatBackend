@@ -1,4 +1,6 @@
-﻿namespace ChatBackend.Rules
+﻿using System.Linq;
+
+namespace ChatBackend.Rules
 {
     public class MessageChecker
     {
@@ -17,6 +19,7 @@
         }
 
 
+
         private bool SecurityChecks(string message) {
 
             if (message.Contains("issues"))
@@ -26,8 +29,9 @@
             return true;
         }
 
-        private bool ProfanityCheck(string message)
+        public bool ProfanityCheck(string message)
         {
+
             if (message.Contains("profanity"))
             {
                 return false;
