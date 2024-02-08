@@ -1,7 +1,7 @@
 using ChatBackend.Security.InputValidation;
 using Xunit;
 
-namespace Chatbackend.Tests
+namespace ChatBackend.Tests
 {
     public class InputValidationTests
     {
