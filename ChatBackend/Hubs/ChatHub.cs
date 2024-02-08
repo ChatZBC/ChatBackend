@@ -66,7 +66,7 @@ namespace ChatBackend.Hubs
         {
             LogMessage(user, message);
             
-            if (_messageChecker.CheckMessage(message) == true) 
+            if (_messageChecker.CheckMessage(message))
             {
                 await Clients.All.SendAsync("MessageReceived", user, message);
             }
