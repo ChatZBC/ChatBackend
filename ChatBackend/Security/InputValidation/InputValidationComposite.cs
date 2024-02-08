@@ -8,7 +8,7 @@ namespace ChatBackend.Security.InputValidation
         {
             if (InputValidators.Count == 0)
             {
-                throw new NotImplementedException("Unexpected usage of InputValidationComposite: No input validators added.");
+                throw new InvalidOperationException("Unexpected usage of InputValidationComposite: No input validators added.");
             }
 
             foreach (IInputValidator inputValidator in InputValidators)
