@@ -22,7 +22,10 @@ namespace ChatBackend.Hubs
             this._users = connectedUserTransient;
         }
 
-
+        /// <summary>
+        /// Adds user to dictionary over users and sends all clients a message
+        /// </summary>
+        /// <returns></returns>
         public override Task OnConnectedAsync()
         {
             var username = Context.GetHttpContext().Request.Query["username"].ToString();
