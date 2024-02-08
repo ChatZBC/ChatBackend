@@ -29,11 +29,12 @@ namespace ChatBackend.Hubs
         public override Task OnConnectedAsync()
         {
             var username = Context.GetHttpContext().Request.Query["username"].ToString();
-            Console.WriteLine("connected"+username);
-            if(username != string.Empty)
+            if(username == string.Empty)
             {
-                _users.Users.TryAdd(Context.ConnectionId, username);
+                SendError("Username not set").ConfigureAwait(false);
+                return Task.CompletedTask;
             }
+            _users.Users.TryAdd(Context.ConnectionId, username);
             SendMessage(username, "welcome").ConfigureAwait(false);
             UpdateUserList(username).ConfigureAwait(false);
             return base.OnConnectedAsync();
