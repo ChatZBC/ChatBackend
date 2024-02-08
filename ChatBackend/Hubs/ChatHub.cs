@@ -80,7 +80,7 @@ namespace ChatBackend.Hubs
         public async Task<List<string>> RequestUserList(string username)
         {
             LogMessage(username, "Requested userlist");
-            return _users.users.Values;
+            return this._users.Users.Values.ToList();
         }
 
         /// <summary>

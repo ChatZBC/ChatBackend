@@ -16,7 +16,7 @@ namespace ChatBackend
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             // Add SignalR service
-            builder.Services.AddTransient<ConnectedUserTransient>();
+            builder.Services.AddSingleton<ConnectedUserTransient>();
             builder.Services.AddSignalR(options=>options.EnableDetailedErrors = true);
 
 
