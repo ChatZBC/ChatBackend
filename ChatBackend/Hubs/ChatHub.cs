@@ -40,9 +40,18 @@ namespace ChatBackend.Hubs
             return base.OnConnectedAsync();
         }
 
+
+        /// <summary>
+        /// Removes user from connected user dictionary and sends updated list of connected users
+        /// </summary>
+        /// <param name="exception"></param>
+        /// <returns></returns>
         public override Task OnDisconnectedAsync(Exception? exception)
         {
+            string username = _users.Users[Context.ConnectionId];
             _users.Users.Remove(Context.ConnectionId);
+            SendMessage("", username + " Disconnected").ConfigureAwait(false);
+            Clients.All.SendAsync("updatelist", _users.Users.Values.ToList()).ConfigureAwait(false);
             return base.OnDisconnectedAsync(exception);
         }
 
