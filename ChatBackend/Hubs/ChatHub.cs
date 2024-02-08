@@ -76,7 +76,7 @@ namespace ChatBackend.Hubs
         /// sends userlist only to the newly connected user
         /// </summary>
         /// <param name="username"></param>
-        /// <returns></returns>
+        /// <returns>list of connected users</returns>
         public async Task<List<string>> RequestUserList(string username)
         {
             LogMessage(username, "Requested userlist");
