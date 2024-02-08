@@ -1,12 +1,18 @@
-﻿namespace ChatBackend.Hubs
+﻿using ChatBackend.Rules;
+using Microsoft.AspNetCore.SignalR;
+using System;
+
+namespace ChatBackend.Hubs
 {
-    // Hubs/ChatHub.cs
-    using Microsoft.AspNetCore.SignalR;
+
 
     public class ChatHub : Hub
     {
         // Create a private readonly ILogger service
         private readonly ILogger<ChatHub> _logger;
+
+        // Instantiate our rule engine
+        private MessageChecker _messageChecker = new MessageChecker();
 
         // Inject the ILogger service into the ChatHub
         public ChatHub(ILogger<ChatHub> logger)
@@ -17,14 +23,25 @@
         public override Task OnConnectedAsync()
         {
             Console.WriteLine("connected");
+            SendMessage("ChatZBC", "Welcome to the ChatHub!");
             return base.OnConnectedAsync();
         }
 
-        // Send message to all clients. Log the message to the console.
+        public void LogMessage(string user, string message)
+        {
+            _logger.LogInformation($"Message received from {user}: {message}");
+        }
+
+        // Log the message to the console.
+        // Then send message to all clients, if it passes the rules in the rules engine.
         public async Task SendMessage(string user, string message)
         {
-            _logger.LogInformation("Message received from {User}: {Message}", user, message);
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+            LogMessage(user, message);
+            
+            if (_messageChecker.CheckMessage(message) == true) 
+            {
+                await Clients.All.SendAsync("MessageReceived", user, message);
+            }
         }
     }
 }

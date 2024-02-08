@@ -8,7 +8,7 @@ namespace ChatBackend.Controllers
     public class ChatController : ControllerBase
     {
 
-        // Offer the Chat view when the Chat action is called
+        // Send response when Chat is called
         [HttpGet]       
         public IActionResult Chat()
         {

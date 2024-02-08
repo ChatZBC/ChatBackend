@@ -15,9 +15,8 @@ namespace ChatBackend
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
             // Add SignalR service
-            //builder.Services.AddSignalR();
+            builder.Services.AddSignalR();
 
 
             var app = builder.Build();
@@ -32,9 +31,13 @@ namespace ChatBackend
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+            app.UseRouting();
             app.UseCors(settings => settings.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+            //app.UseEndpoints(endpoints => endpoints.MapHub<ChatHub>);
+            //app.UseCors(settings => settings.AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             // Map SignalR Hub to /chatHub
-            //app.MapHub<ChatHub>("/chatHub");
+            app.MapHub<ChatHub>("/chatHub");
 
             app.MapControllers();
 
