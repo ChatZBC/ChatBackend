@@ -68,7 +68,7 @@ namespace ChatBackend.Hubs
             
             if (_messageChecker.CheckMessage(message))
             {
-                await Clients.All.SendAsync("MessageReceived", user, message);
+                await Clients.AllExcept(Context.ConnectionId).SendAsync("MessageReceived", user, message);
             }
         }
 
