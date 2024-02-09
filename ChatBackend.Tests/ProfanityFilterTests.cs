@@ -44,7 +44,7 @@ namespace ChatBackend.Tests
         [InlineData("This is a good example.")]
         [InlineData("This is a nice example.")]
         [InlineData("This is a great example.")]
-        public void DosNotContainsProfanity_ReturnsTrue_WhenTextContainsProfanity(string message)
+        public void DosNotContainsProfanity_ReturnsTrue_WhenTextDosNotContainsProfanity(string message)
         {
             // Arrange
             var profaneWords = new List<string> { "bad", "nasty", "horrible" };
