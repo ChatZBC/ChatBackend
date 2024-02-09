@@ -1,0 +1,29 @@
+Sikr at der peges på det rigtige container image(SDK)
+Sikr at der peges på den rigtige runtime(aspnet)
+Sikr at der peges på den rigtige DLL fil
+
+Hvad er det rigtige container image? 
+ - Det er typisk det nyeste, hvis du udvikler i en opdateret Visual Studio
+
+ Hvad er den rigtige runtime
+  - Ligeledes, typisk den nyeste
+
+Der kan findes hints her(Microsoft Repo):
+https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile
+
+Hvad er den rigtige DLL fil?
+ - Typisk den, der hedder det samme, som projektets navn
+
+Build kommando:
+docker build -t dragndrop/chatbackend . 
+                ^         ^
+                |         Projektnavn
+                UserID på Docker Hub
+
+Kør imaget:
+docker run -p 8080:8080 dragndrop/chatbackend
+
+
+Inspiration:
+https://www.youtube.com/watch?v=f0lMGPB10bM
+Han har en rigtig cool måde at simplificere virtualisering og containerization på. Worth a watch.
