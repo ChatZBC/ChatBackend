@@ -16,7 +16,8 @@ namespace ChatBackend
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             // Add SignalR service
-           // builder.Services.AddSingleton<ConnectedUserTransient>();
+
+            builder.Services.AddSingleton<ConnectedUserTransient>();
             builder.Services.AddSignalR(options=>options.EnableDetailedErrors = true);
 
 
@@ -27,9 +28,11 @@ namespace ChatBackend
            // {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+
           //  }
 
           //  app.UseHttpsRedirection();
+
             app.UseAuthorization();
             app.UseRouting();
             app.UseCors(settings => settings.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
