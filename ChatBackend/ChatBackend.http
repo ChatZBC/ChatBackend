@@ -1,4 +1,4 @@
-@ChatBackend_HostAddress = http://localhost:7026
+@ChatBackend_HostAddress = http://localhost:8080
 
 
 GET {{ChatBackend_HostAddress}}/weatherforecast/
